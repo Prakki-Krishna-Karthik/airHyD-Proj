@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Akashvani Hyderabad</title>
   <style>
+    /* General styles */
     * {
       margin: 0;
       padding: 0;
@@ -24,6 +25,7 @@
       padding: 20px;
       flex: 1;
     }
+    /* Header */
     .header {
       background-color: #fff;
       display: flex;
@@ -49,6 +51,7 @@
       flex-grow: 1;
       margin: 0 20px;
     }
+    /* Navigation Bar */
     .nav-bar {
       background-color: #0066cc;
       padding: 10px 0;
@@ -113,6 +116,8 @@
     .dropdown-content a:hover {
       background-color: #f0f0f0;
     }
+
+    /* Login/Register Container */
     .login-container {
       display: flex;
       justify-content: center;
@@ -182,6 +187,27 @@
       transform: translateY(-2px);
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     }
+    .error-message {
+      color: #d9534f;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+    .register-link {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+    .register-link a {
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Content Pages (for Dashboard) */
     .content-page {
       background-color: white;
       padding: 30px;
@@ -191,6 +217,7 @@
       animation: fadeIn 0.6s ease;
       width: calc(100% - 40px);
       max-width: 1200px;
+      display: none; /* Controlled by JavaScript */
     }
     .page-title {
       font-size: 26px;
@@ -236,38 +263,8 @@
       transform: translateY(-2px);
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     }
-    .footer {
-      text-align: center;
-      padding: 30px 0;
-      font-size: 14px;
-      color: #777;
-      margin-top: auto;
-      background-color: #fff;
-      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
-    }
-    .footer p {
-      margin-bottom: 10px;
-    }
-    .error-message {
-      color: #d9534f;
-      font-size: 14px;
-      margin-top: 5px;
-      display: none;
-    }
-    .register-link {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #666;
-    }
-    .register-link a {
-      color: #0066cc;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .register-link a:hover {
-      text-decoration: underline;
-    }
-    /* New styles for file management */
+    
+    /* File Management Specific Styles */
     .file-upload-section {
       background: #f8f9fa;
       padding: 20px;
@@ -333,10 +330,28 @@
       padding: 40px 20px;
       color: #666;
     }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 30px 0;
+      font-size: 14px;
+      color: #777;
+      margin-top: auto;
+      background-color: #fff;
+      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+    }
+    .footer p {
+      margin-bottom: 10px;
+    }
+
+    /* Animations */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    
+    /* Responsive Adjustments */
     @media (max-width: 900px) {
       .header { flex-direction: column; gap: 20px; padding: 20px; }
       .main-heading { margin: 10px 0; font-size: 28px; }
@@ -427,7 +442,7 @@
 
     <div class="nav-bar">
       <ul class="nav-list">
-        <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+        <li><a href="#" class="nav-link active" data-page="home-page">Home</a></li>
         <li class="dropdown">
           <a href="#" class="nav-link">Registers</a>
           <div class="dropdown-content">
@@ -452,15 +467,14 @@
       <div id="home-page" class="content-page">
         <h2 class="page-title">Welcome to Akashvani Hyderabad</h2>
         <p style="text-align: center; margin-top: 20px; color: #555;">
-          Select an option from the menu above to proceed.
+          Select an option from the menu above to proceed or manage files.
         </p>
         <div class="btn-container">
           <button class="content-btn" id="go-to-files">Manage Files</button>
         </div>
       </div>
 
-      <!-- File Management Page -->
-      <div id="file-management" class="content-page" style="display: none;">
+      <div id="file-management" class="content-page">
         <h2 class="page-title">File Management</h2>
         
         <div class="file-upload-section">
@@ -471,13 +485,15 @@
               <input class="form-input" id="file-name" type="text" placeholder="e.g., Technical Register June 2024">
             </div>
             <div class="form-group">
-              <label class="form-label" for="file-type">Register Type</label>
+              <label class="form-label" for="file-type">Register/Report Type</label>
               <select class="form-input" id="file-type" required>
                 <option value="">Select type</option>
                 <option value="technical">Technical Register</option>
                 <option value="send">Send Register</option>
                 <option value="receive">Receive Register</option>
-                <option value="report">Report</option>
+                <option value="monthly">Monthly Report</option>
+                <option value="quarterly">Quarterly Report</option>
+                <option value="annual">Annual Report</option>
                 <option value="other">Other</option>
               </select>
             </div>
@@ -490,55 +506,46 @@
         </div>
 
         <div class="file-list-section">
-          <h3>All Files</h3>
+          <h3>All Uploaded Files</h3>
           <div id="all-files" class="file-grid">
-            <!-- All files will appear here -->
-          </div>
+            </div>
         </div>
       </div>
 
-      <!-- Register Pages -->
-      <div id="technical-register" class="content-page" style="display: none;">
+      <div id="technical-register" class="content-page">
         <h2 class="page-title">Technical Register</h2>
         <div id="technical-files" class="file-grid">
-          <!-- Technical register files will appear here -->
-        </div>
+          </div>
       </div>
 
-      <div id="send-register" class="content-page" style="display: none;">
+      <div id="send-register" class="content-page">
         <h2 class="page-title">Send Register</h2>
         <div id="send-files" class="file-grid">
-          <!-- Send register files will appear here -->
-        </div>
+          </div>
       </div>
 
-      <div id="receive-register" class="content-page" style="display: none;">
+      <div id="receive-register" class="content-page">
         <h2 class="page-title">Receive Register</h2>
         <div id="receive-files" class="file-grid">
-          <!-- Receive register files will appear here -->
-        </div>
+          </div>
       </div>
 
-      <!-- Report Pages -->
-      <div id="monthly-report" class="content-page" style="display: none;">
+      <div id="monthly-report" class="content-page">
         <h2 class="page-title">Monthly Report</h2>
         <div id="monthly-files" class="file-grid">
-          <!-- Monthly report files will appear here -->
-        </div>
+          </div>
       </div>
 
-      <div id="quarterly-report" class="content-page" style="display: none;">
+      <div id="quarterly-report" class="content-page">
         <h2 class="page-title">Quarterly Report</h2>
         <div id="quarterly-files" class="file-grid">
-          <!-- Quarterly report files will appear here -->
-        </div>
+          </div>
       </div>
 
-      <div id="annual-report" class="content-page" style="display: none;">
+      <div id="annual-report" class="content-page">
         <h2 class="page-title">Annual Report</h2>
         <div id="annual-files" class="file-grid">
-          <!-- Annual report files will appear here -->
-        </div>
+          </div>
       </div>
     </div>
 
@@ -567,12 +574,20 @@
       e.preventDefault();
       loginPage.style.display = 'none';
       registerPage.style.display = 'flex';
+      // Clear registration form errors when switching
+      document.getElementById('name-error').style.display = 'none';
+      document.getElementById('reg-userid-error').style.display = 'none';
+      document.getElementById('reg-password-error').style.display = 'none';
+      document.getElementById('confirm-error').style.display = 'none';
     });
     
     loginLink.addEventListener('click', (e) => {
       e.preventDefault();
       registerPage.style.display = 'none';
       loginPage.style.display = 'flex';
+      // Clear login form errors when switching
+      document.getElementById('userid-error').style.display = 'none';
+      document.getElementById('password-error').style.display = 'none';
     });
 
     registerForm.addEventListener('submit', function(e) {
@@ -583,36 +598,35 @@
       const confirm = document.getElementById('reg-confirm').value;
       let isValid = true;
       
+      // Reset errors
+      document.getElementById('name-error').style.display = 'none';
+      document.getElementById('reg-userid-error').style.display = 'none';
+      document.getElementById('reg-password-error').style.display = 'none';
+      document.getElementById('confirm-error').style.display = 'none';
+      
       if (!name) {
         document.getElementById('name-error').style.display = 'block';
         isValid = false;
-      } else {
-        document.getElementById('name-error').style.display = 'none';
       }
       
       if (!userid) {
+        document.getElementById('reg-userid-error').textContent = 'Please choose a User ID';
         document.getElementById('reg-userid-error').style.display = 'block';
         isValid = false;
       } else if (userDatabase[userid]) {
         document.getElementById('reg-userid-error').textContent = 'User ID already exists';
         document.getElementById('reg-userid-error').style.display = 'block';
         isValid = false;
-      } else {
-        document.getElementById('reg-userid-error').style.display = 'none';
       }
       
       if (password.length < 6) {
         document.getElementById('reg-password-error').style.display = 'block';
         isValid = false;
-      } else {
-        document.getElementById('reg-password-error').style.display = 'none';
       }
       
       if (password !== confirm) {
         document.getElementById('confirm-error').style.display = 'block';
         isValid = false;
-      } else {
-        document.getElementById('confirm-error').style.display = 'none';
       }
       
       if (isValid) {
@@ -634,18 +648,18 @@
       const password = document.getElementById('password').value;
       let isValid = true;
       
+      // Reset errors
+      document.getElementById('userid-error').style.display = 'none';
+      document.getElementById('password-error').style.display = 'none';
+      
       if (!userid) {
         document.getElementById('userid-error').style.display = 'block';
         isValid = false;
-      } else {
-        document.getElementById('userid-error').style.display = 'none';
       }
       
       if (!password) {
         document.getElementById('password-error').style.display = 'block';
         isValid = false;
-      } else {
-        document.getElementById('password-error').style.display = 'none';
       }
       
       if (isValid) {
@@ -658,7 +672,17 @@
           loginPage.style.display = 'none';
           dashboard.style.display = 'block';
           loginForm.reset();
-          initializeFileDB().then(loadFiles);
+          
+          // After successful login, initialize DB and show homepage
+          initializeFileDB().then(() => {
+            showPage('home-page');
+            loadFiles(); // Load files for displaying in categories
+          }).catch(err => {
+            console.error("File DB initialization error after login:", err);
+            alert("Error initializing file storage. Some features might not work.");
+            showPage('home-page'); // Still show home page if DB fails
+          });
+
         } else {
           alert('Invalid User ID or Password');
         }
@@ -671,10 +695,16 @@
       localStorage.removeItem('currentUser');
       dashboard.style.display = 'none';
       loginPage.style.display = 'flex';
+      // Clear login form fields on logout
+      document.getElementById('userid').value = '';
+      document.getElementById('password').value = '';
+      // Reset active nav link
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      document.querySelector('[data-page="home-page"]').classList.add('active'); // Set Home as active
     });
 
     // ======================
-    // FILE MANAGEMENT SYSTEM
+    // FILE MANAGEMENT SYSTEM (IndexedDB)
     // ======================
     const FILE_DB_NAME = "AkashvaniFilesDB";
     let fileDB;
@@ -707,27 +737,29 @@
       e.preventDefault();
       
       const fileInput = document.getElementById('file-input');
-      const fileName = document.getElementById('file-name').value || fileInput.files[0].name;
-      const fileType = document.getElementById('file-type').value;
       const file = fileInput.files[0];
-      
+      const fileNameInput = document.getElementById('file-name');
+      const fileType = document.getElementById('file-type').value;
+
       if (!file || !fileType) {
-        alert('Please select a file and specify its type');
+        alert('Please select a file and specify its type.');
         return;
       }
+      
+      const fileName = fileNameInput.value.trim() || file.name; // Use input name, fallback to original file name
 
       const reader = new FileReader();
       reader.onload = (event) => {
         const fileData = {
-          id: Date.now().toString(),
+          id: Date.now().toString(), // Unique ID
           name: fileName,
-          type: fileType,
-          fileType: file.type,
+          type: fileType, // Category (technical, send, monthly, etc.)
+          fileMimeType: file.type, // Actual MIME type (e.g., application/pdf)
           size: file.size,
           lastModified: file.lastModified,
-          data: event.target.result,
+          data: event.target.result, // Base64 encoded file content
           uploadedAt: new Date().toISOString(),
-          uploadedBy: currentUser.userid
+          uploadedBy: currentUser ? currentUser.userid : 'unknown'
         };
 
         const transaction = fileDB.transaction(['files'], 'readwrite');
@@ -736,20 +768,25 @@
 
         transaction.oncomplete = () => {
           alert('File uploaded successfully!');
-          document.getElementById('upload-form').reset();
-          loadFiles();
+          document.getElementById('upload-form').reset(); // Clear form
+          loadFiles(); // Refresh file lists
         };
         
         transaction.onerror = (event) => {
           console.error("Upload error:", event.target.error);
-          alert('Error uploading file');
+          alert('Error uploading file: ' + event.target.error.message);
         };
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Read file as Base64 data URL
     });
 
-    // Load and display files
+    // Load and display files from IndexedDB
     function loadFiles() {
+      if (!fileDB) {
+        console.warn("File database not initialized yet.");
+        return;
+      }
+
       const transaction = fileDB.transaction(['files'], 'readonly');
       const store = transaction.objectStore('files');
       const request = store.getAll();
@@ -768,87 +805,89 @@
     function displayFilesByCategory(files) {
       // Clear all file sections first
       document.querySelectorAll('.file-grid').forEach(section => {
-        section.innerHTML = '';
+        section.innerHTML = ''; // Clear previous content
       });
 
       if (files.length === 0) {
         document.querySelectorAll('.file-grid').forEach(section => {
-          section.innerHTML = '<div class="empty-state">No files found</div>';
+          section.innerHTML = '<div class="empty-state">No files found.</div>';
         });
         return;
       }
 
       // Group files by type
       const fileGroups = {
-        technical: [],
-        send: [],
-        receive: [],
-        report: [],
-        monthly: [],
-        quarterly: [],
-        annual: [],
-        other: []
+        'all-files': [], // For the "All Uploaded Files" section
+        'technical-files': [],
+        'send-files': [],
+        'receive-files': [],
+        'monthly-files': [],
+        'quarterly-files': [],
+        'annual-files': []
       };
 
       files.forEach(file => {
-        if (file.type === 'technical') {
-          fileGroups.technical.push(file);
-        } else if (file.type === 'send') {
-          fileGroups.send.push(file);
-        } else if (file.type === 'receive') {
-          fileGroups.receive.push(file);
-        } else if (file.type === 'report') {
-          fileGroups.report.push(file);
-        } else if (file.type === 'monthly') {
-          fileGroups.monthly.push(file);
-        } else if (file.type === 'quarterly') {
-          fileGroups.quarterly.push(file);
-        } else if (file.type === 'annual') {
-          fileGroups.annual.push(file);
-        } else {
-          fileGroups.other.push(file);
+        // Add to the 'all-files' section regardless of type
+        fileGroups['all-files'].push(file); 
+
+        // Add to specific category sections
+        switch (file.type) {
+          case 'technical':
+            fileGroups['technical-files'].push(file);
+            break;
+          case 'send':
+            fileGroups['send-files'].push(file);
+            break;
+          case 'receive':
+            fileGroups['receive-files'].push(file);
+            break;
+          case 'monthly':
+            fileGroups['monthly-files'].push(file);
+            break;
+          case 'quarterly':
+            fileGroups['quarterly-files'].push(file);
+            break;
+          case 'annual':
+            fileGroups['annual-files'].push(file);
+            break;
+          // 'other' types will only appear in 'all-files'
         }
       });
 
       // Display files in their respective sections
-      displayFilesInSection('all-files', files);
-      displayFilesInSection('technical-files', fileGroups.technical);
-      displayFilesInSection('send-files', fileGroups.send);
-      displayFilesInSection('receive-files', fileGroups.receive);
-      displayFilesInSection('monthly-files', fileGroups.monthly);
-      displayFilesInSection('quarterly-files', fileGroups.quarterly);
-      displayFilesInSection('annual-files', fileGroups.annual);
+      for (const sectionId in fileGroups) {
+        displayFilesInSection(sectionId, fileGroups[sectionId]);
+      }
     }
 
     function displayFilesInSection(sectionId, files) {
-      const section = document.getElementById(sectionId);
-      if (!section) return;
-
-      if (files.length === 0) {
-        section.innerHTML = '<div class="empty-state">No files found in this category</div>';
+      const sectionElement = document.getElementById(sectionId);
+      if (!sectionElement) {
+        console.warn(`Section with ID "${sectionId}" not found.`);
         return;
       }
 
-      section.innerHTML = '';
+      sectionElement.innerHTML = ''; // Clear existing content
+
+      if (files.length === 0) {
+        sectionElement.innerHTML = '<div class="empty-state">No files found in this category.</div>';
+        return;
+      }
+
       files.forEach(file => {
         const fileCard = document.createElement('div');
         fileCard.className = 'file-card';
         
-        // Format file size
-        let sizeText;
-        if (file.size < 1024) {
-          sizeText = `${file.size} B`;
-        } else if (file.size < 1048576) {
-          sizeText = `${(file.size / 1024).toFixed(1)} KB`;
-        } else {
-          sizeText = `${(file.size / 1048576).toFixed(1)} MB`;
-        }
+        const sizeText = formatFileSize(file.size);
+        const uploadedDate = new Date(file.uploadedAt).toLocaleDateString(undefined, {
+            year: 'numeric', month: 'short', day: 'numeric'
+        });
 
         fileCard.innerHTML = `
           <h4>${file.name}</h4>
           <p>
-            <span class="file-type-badge">${file.type}</span>
-            <small>${sizeText} • ${new Date(file.uploadedAt).toLocaleDateString()}</small>
+            <span class="file-type-badge">${file.type.charAt(0).toUpperCase() + file.type.slice(1)}</span>
+            <small>${sizeText} • ${uploadedDate}</small>
           </p>
           <div class="file-actions">
             <button class="action-btn download-btn" data-id="${file.id}">Download</button>
@@ -856,24 +895,24 @@
           </div>
         `;
         
-        section.appendChild(fileCard);
+        sectionElement.appendChild(fileCard);
       });
 
-      // Add event listeners to new buttons
-      section.querySelectorAll('.download-btn').forEach(btn => {
+      // Attach event listeners to newly created buttons
+      sectionElement.querySelectorAll('.download-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           downloadFile(e.target.getAttribute('data-id'));
         });
       });
       
-      section.querySelectorAll('.delete-btn').forEach(btn => {
+      sectionElement.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           deleteFile(e.target.getAttribute('data-id'));
         });
       });
     }
 
-    // Download file
+    // Download file logic
     function downloadFile(fileId) {
       const transaction = fileDB.transaction(['files'], 'readonly');
       const store = transaction.objectStore('files');
@@ -881,51 +920,61 @@
 
       request.onsuccess = () => {
         const file = request.result;
-        const link = document.createElement('a');
-        link.href = file.data;
-        link.download = file.name;
-        link.click();
+        if (file) {
+          const link = document.createElement('a');
+          link.href = file.data;
+          link.download = file.name; // Use the stored name for download
+          document.body.appendChild(link); // Append to body to make click work in all browsers
+          link.click();
+          document.body.removeChild(link); // Clean up
+        } else {
+          alert('File not found for download.');
+        }
       };
       
       request.onerror = (event) => {
         console.error("Download error:", event.target.error);
-        alert('Error downloading file');
+        alert('Error downloading file: ' + event.target.error.message);
       };
     }
 
-    // Delete file
+    // Delete file logic
     function deleteFile(fileId) {
-      if (!confirm('Are you sure you want to delete this file?')) return;
+      if (!confirm('Are you sure you want to delete this file? This action cannot be undone.')) return;
       
       const transaction = fileDB.transaction(['files'], 'readwrite');
       const store = transaction.objectStore('files');
       store.delete(fileId);
 
       transaction.oncomplete = () => {
-        loadFiles();
+        alert('File deleted successfully!');
+        loadFiles(); // Refresh file lists after deletion
       };
       
       transaction.onerror = (event) => {
         console.error("Delete error:", event.target.error);
-        alert('Error deleting file');
+        alert('Error deleting file: ' + event.target.error.message);
       };
     }
 
-    // Format file size for display
+    // Helper to format file size for display
     function formatFileSize(bytes) {
-      if (bytes < 1024) return bytes + ' B';
-      if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-      return (bytes / 1048576).toFixed(1) + ' MB';
+      if (bytes === 0) return '0 B';
+      const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+      const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+      return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     }
 
     // ======================
-    // PAGE NAVIGATION
+    // PAGE NAVIGATION LOGIC
     // ======================
-    document.querySelectorAll('.nav-link, .dropdown-content a').forEach(link => {
+    document.querySelectorAll('.nav-list .nav-link, .dropdown-content a').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const page = link.getAttribute('data-page');
-        if (page) showPage(page);
+        if (page) {
+          showPage(page);
+        }
       });
     });
 
@@ -934,55 +983,81 @@
     });
 
     function showPage(pageId) {
-      // Hide all pages
+      // 1. Hide all content pages
       document.querySelectorAll('.content-page').forEach(page => {
         page.style.display = 'none';
       });
       
-      // Show requested page
-      document.getElementById(pageId).style.display = 'block';
-      
-      // Update active nav link
-      document.querySelectorAll('.nav-link').forEach(link => {
+      // 2. Show the requested page
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.style.display = 'block';
+      } else {
+        console.error(`Attempted to show non-existent page: ${pageId}`);
+        // Optionally redirect to home or show an error page
+        showPage('home-page');
+        return; 
+      }
+
+      // 3. Update active state of navigation links
+      document.querySelectorAll('.nav-list .nav-link').forEach(link => {
         link.classList.remove('active');
       });
-      
-      // Set active state for the clicked link or its parent dropdown
-      const clickedLink = document.querySelector(`[data-page="${pageId}"]`);
-      if (clickedLink) {
-        if (clickedLink.classList.contains('nav-link')) {
-          clickedLink.classList.add('active');
-        } else {
-          // For dropdown items, activate the parent dropdown
-          const parentDropdown = clickedLink.closest('.dropdown').querySelector('.nav-link');
-          if (parentDropdown) parentDropdown.classList.add('active');
+
+      // Find the link corresponding to the current pageId
+      const currentNavLink = document.querySelector(`.nav-list [data-page="${pageId}"]`);
+      if (currentNavLink) {
+        currentNavLink.classList.add('active');
+      } else {
+        // If the current page is a dropdown item (like a specific register/report),
+        // find and activate its parent dropdown link.
+        const dropdownItem = document.querySelector(`.dropdown-content a[data-page="${pageId}"]`);
+        if (dropdownItem) {
+          const parentDropdownLink = dropdownItem.closest('.dropdown')?.querySelector('.nav-link');
+          if (parentDropdownLink) {
+            parentDropdownLink.classList.add('active');
+          }
         }
       }
       
-      // Load files when file management page is shown
-      if (pageId === 'file-management') {
-        loadFiles();
+      // 4. Specific actions for certain pages
+      if (pageId === 'file-management' || pageId === 'technical-register' || 
+          pageId === 'send-register' || pageId === 'receive-register' ||
+          pageId === 'monthly-report' || pageId === 'quarterly-report' || 
+          pageId === 'annual-report') {
+        loadFiles(); // Ensure files are reloaded when navigating to file/report display pages
       }
     }
 
     // ======================
-    // INITIALIZATION
+    // INITIALIZATION ON LOAD
     // ======================
     window.addEventListener('DOMContentLoaded', () => {
-      loginPage.style.display = 'flex';
+      // Set initial display states for the main sections
+      loginPage.style.display = 'flex'; // Default to showing login
       registerPage.style.display = 'none';
       dashboard.style.display = 'none';
       
-      // Initialize file DB if user is already logged in
+      // Check for a saved user session
       const savedUser = JSON.parse(localStorage.getItem('currentUser'));
-      if (savedUser && userDatabase[savedUser.userid]?.password === savedUser.password) {
-        currentUser = savedUser;
-        loginPage.style.display = 'none';
-        dashboard.style.display = 'block';
-        initializeFileDB().then(loadFiles).catch(err => {
-          console.error("Initialization error:", err);
+      
+      // Validate the saved user against the userDatabase
+      if (savedUser && userDatabase[savedUser.userid] && userDatabase[savedUser.userid].password === savedUser.password) {
+        currentUser = savedUser; // Restore current user
+        loginPage.style.display = 'none'; // Hide login
+        dashboard.style.display = 'block'; // Show dashboard
+        
+        // Initialize IndexedDB for files, then show the home page and load files
+        initializeFileDB().then(() => {
+          showPage('home-page'); // Show the default dashboard page
+          loadFiles(); // Load files for display in all relevant sections
+        }).catch(err => {
+          console.error("Failed to initialize file database on load:", err);
+          alert("Could not load file storage. Some features may be unavailable.");
+          showPage('home-page'); // Still try to show the home page
         });
       }
+      // If no valid session, loginPage remains 'flex' (visible) as set initially
     });
   </script>
 </body>
